@@ -5,6 +5,7 @@ const fs = require('fs');
 const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
+const Engineer = require('./lib/Engineer');
 
 const team = [];
 
@@ -83,6 +84,28 @@ function getInfo () {
             console.log(team);
         })
 
+    } else if(ans.role === 'Intern') {
+        inquirer.prompt([{
+            type: 'input',
+            name: 'school',
+            message: 'What school are they currently attending?',
+        }])
+        .then (answers => {
+            const projIntern = new Intern(ans.name, ans.role, ans.email, ans.id, answers.school);
+            team.push(projIntern);
+            console.log(team);
+        })
+    } else if(ans.role === 'Engineer') {
+        inquirer.prompt([{
+            type: 'input',
+            name: 'github',
+            message: 'What is their github username?',
+        }])
+        .then (answers => {
+            const projEngineer = new Engineer(ans.name, ans.role, ans.email, ans.id, answers.github);
+            team.push(projEngineer);
+            console.log(team);
+        })
     }
 })
 }
