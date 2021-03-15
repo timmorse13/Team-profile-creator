@@ -150,10 +150,10 @@ function printTeam(projectTeam) {
     <h2>${projectTeam[i].role}</h2>
   </div>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item">${projectTeam[i].name}</li>
-    <li class="list-group-item">${projectTeam[i].email}</li>
-    <li class="list-group-item">${projectTeam[i].id}</li>
-    <li class="list-group-item">${projectTeam[i].officeNumber || projectTeam[i].gitHub || projectTeam[i].school}</li>
+    <li class="list-group-item">Name: ${projectTeam[i].name}</li>
+    <li class="list-group-item">Email: <a href= "mailto:${projectTeam[i].email}">${projectTeam[i].email}</a></li>
+    <li class="list-group-item">Employee ID: ${projectTeam[i].id}</li>
+    <li class="list-group-item"> ${projectTeam[i].officeNumber || projectTeam[i].gitHub || projectTeam[i].school}</li>
      
   </ul>
     </div>`    
