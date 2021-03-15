@@ -28,7 +28,7 @@ function getInfo () {
         type: 'list',
         name: 'role',
         message: "What is the employee's role?",
-        choices: ["Manager", "Intern", "Engineer"],
+        choices: ["Manager", "Intern", "Engineer", "Employee"],
         validate: Input => {
             if (Input) {
                 return true;
@@ -82,6 +82,8 @@ function getInfo () {
             const projManager = new Manager(ans.name, ans.role, ans.email, ans.id, answers.officeNumber);
             team.push(projManager);
             console.log(team);
+            addTeam();
+            
         })
 
     } else if(ans.role === 'Intern') {
@@ -94,6 +96,8 @@ function getInfo () {
             const projIntern = new Intern(ans.name, ans.role, ans.email, ans.id, answers.school);
             team.push(projIntern);
             console.log(team);
+            addTeam();
+            
         })
     } else if(ans.role === 'Engineer') {
         inquirer.prompt([{
@@ -105,6 +109,29 @@ function getInfo () {
             const projEngineer = new Engineer(ans.name, ans.role, ans.email, ans.id, answers.github);
             team.push(projEngineer);
             console.log(team);
+            addTeam();
+            
+        })
+    } else {
+        const projEmployee = new Employee(ans.name, ans.role, ans.email, ans.id);
+        team.push(projEmployee);
+    }
+
+
+    function addTeam() {
+        inquirer.prompt([{
+            type: 'confirm',
+            name: 'addteam',
+            message: 'Would you like to add more project members?'
+        }])
+        .then(response => {
+            if (response.addteam === true) {
+                getInfo(team)
+            }
+            else {
+                console.log(team)
+                // print team
+            }
         })
     }
 })
