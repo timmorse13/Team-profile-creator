@@ -9,7 +9,7 @@ const Engineer = require('./lib/Engineer');
 
 const team = [];
 
-function getInfo () {
+function getInfo (projectTeam) {
     inquirer.prompt([{
         type: 'input',
         name: 'name',
@@ -102,11 +102,11 @@ function getInfo () {
     } else if(ans.role === 'Engineer') {
         inquirer.prompt([{
             type: 'input',
-            name: 'github',
+            name: 'gitHub',
             message: 'What is their github username?',
         }])
         .then (answers => {
-            const projEngineer = new Engineer(ans.name, ans.role, ans.email, ans.id, answers.github);
+            const projEngineer = new Engineer(ans.name, ans.role, ans.email, ans.id, answers.gitHub);
             team.push(projEngineer);
             console.log(team);
             addTeam();
@@ -115,6 +115,7 @@ function getInfo () {
     } else {
         const projEmployee = new Employee(ans.name, ans.role, ans.email, ans.id);
         team.push(projEmployee);
+        addTeam();
     }
 
 
@@ -129,12 +130,63 @@ function getInfo () {
                 getInfo(team)
             }
             else {
-                console.log(team)
+                console.log(team);
+                printTeam(team)
                 // print team
             }
         })
     }
 })
 }
+
+function printTeam(projectTeam) {
+
+    const cards = [];
+
+    for (var i = 0; i < projectTeam.length; i++) {
+        const teamCard = `
+        <div class="card" style="width: 18rem;">
+  <div class="card-header">
+    <h2>${projectTeam[i].role}</h2>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">${projectTeam[i].name}</li>
+    <li class="list-group-item">${projectTeam[i].email}</li>
+    <li class="list-group-item">${projectTeam[i].id}</li>
+    <li class="list-group-item">${projectTeam[i].officeNumber || projectTeam[i].gitHub || projectTeam[i].school}</li>
+     
+  </ul>
+    </div>`    
+    
+    
+        cards.push(teamCard);
+
+    }
+
+const html = `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Project Team</title>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        </head>
+        <body>
+            ${cards}
+        </body>
+        </html>`
+
+        fs.writeFile('results.html', html, err => {
+            err ? console.log(err) : console.log('Success!');
+        })   
+
+}
+
+
+
+
 
 getInfo();
