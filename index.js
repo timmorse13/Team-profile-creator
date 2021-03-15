@@ -3,6 +3,10 @@ const jest = require('jest');
 const fs = require('fs');
 
 const Employee = require('./lib/Employee');
+const Manager = require('./lib/Manager');
+const Intern = require('./lib/Intern');
+
+const team = [];
 
 function getInfo () {
     inquirer.prompt([{
@@ -66,6 +70,21 @@ function getInfo () {
 
 
 ])
+.then(ans => {
+    if(ans.role === 'Manager') {
+        inquirer.prompt([{
+            type: 'input',
+            name: 'officeNumber',
+            message: "What is their office number?",
+        }])
+        .then (answers => {
+            const projManager = new Manager(ans.name, ans.role, ans.email, ans.id, answers.officeNumber);
+            team.push(projManager);
+            console.log(team);
+        })
+
+    }
+})
 }
 
 getInfo();
